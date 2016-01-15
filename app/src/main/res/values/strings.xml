@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">TestApp</string>
+    <string name="petition">Hola! Desea donar $100 para testear mi app?</string>
+    <string name="hi">Hola! Para testear la aplicación, hacer click en "Testear"</string>
+    <string name="yes">Yes</string>
+    <string name="test">Testear</string>
+    <string name="connection_error">Error de conexión. Por favor, intente nuevamente</string>
+    <string name="select_payment_method">Seleccione un método de pago: </string>
+    <string name="no_methods">No hay métodos de pago disponibles</string>
+    <string name="you_select">Seleccionaste como medio de pago: </string>
+    <string name="next_step_aclaration">Próximamente se podrá completar el proceso de pago. Muchas gracias :)</string>
 </resources>

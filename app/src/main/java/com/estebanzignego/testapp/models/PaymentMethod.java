@@ -1,10 +1,15 @@
 package com.estebanzignego.testapp.models;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 
-public class PaymentMethod {
+
+public class PaymentMethod implements Serializable{
 
     private String id;
     private String name;
@@ -29,4 +34,29 @@ public class PaymentMethod {
 
         return new PaymentMethod(id, name, paymentTypeId, secureThumbnail, thumbnail);
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPaymentTypeId() {
+        return payment_type_id;
+    }
+
+    public String getSecureThumbnail() {
+        return secure_thumbnail;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public boolean isCreditCard() {
+        return this.getPaymentTypeId().equals("credit_card");
+    }
+
 }

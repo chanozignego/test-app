@@ -1,5 +1,7 @@
 package com.estebanzignego.testapp.utils;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -13,10 +15,10 @@ import okio.BufferedSink;
 
 public class HttpUtils {
 
-    private OkHttpClient client = new OkHttpClient();
-    private Request.Builder builder;
+    private static OkHttpClient client = new OkHttpClient();
+    private static Request.Builder builder = new Request.Builder();
 
-    public void get(String url, HttpCallback cb) {
+    public static void get(String url, HttpCallback cb) {
         call("GET", url, cb);
     }
 
@@ -28,7 +30,7 @@ public class HttpUtils {
         call("POST", url, cb);
     }
 
-    private void call(String method, String url, final HttpCallback callback) {
+    private static void call(String method, String url, final HttpCallback callback) {
         Request request = builder.url(url).method(method, method.equals("GET") ? null : new RequestBody() {
 
             @Override
@@ -45,13 +47,21 @@ public class HttpUtils {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                callback.onFailure(null, e);
+                try {
+                    callback.onFailure(null, e);
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 if (!response.isSuccessful()) {
-                    callback.onFailure(response, null);
+                    try {
+                        callback.onFailure(response, null);
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
                     return;
                 }
                 callback.onSuccess(response);
@@ -63,7 +73,7 @@ public class HttpUtils {
 
     public interface HttpCallback  {
 
-        public void onFailure(Response response, Throwable throwable);
+        public void onFailure(Response response, Throwable throwable) throws Throwable;
         public void onSuccess(Response response);
     }
 
